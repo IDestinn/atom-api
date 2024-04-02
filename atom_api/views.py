@@ -1,6 +1,8 @@
-from django.shortcuts import HttpResponse
+from rest_framework import generics
+from .models import Users
+from .serializers import UsersSerializer
 
 
-# Create your views here.
-def home(request):
-    return HttpResponse("Hello, world!")
+class UsersGet(generics.ListCreateAPIView):
+    queryset = Users.objects.all()
+    serializer_class = UsersSerializer
