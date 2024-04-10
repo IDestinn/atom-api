@@ -11,6 +11,7 @@ from .models import (
     Organizations,
     RequestsOfEmployees,
     CriterionResponse,
+    RequestStatuses,
 )
 
 admin.site.register(Employees)
@@ -24,4 +25,5 @@ admin.site.register(NominationTypes)
 admin.site.register(Organizations)
 admin.site.register(RequestsOfEmployees)
 admin.site.register(CriterionResponse)
+admin.site.register(RequestStatuses)
 # Register your models here.

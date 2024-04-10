@@ -15,7 +15,7 @@ class Criteria(models.Model):
     creator = models.CharField(max_length=50)
 
     def __str__(self) -> str:
-        return f"{self.name} {self.criteria_type}"
+        return f"{self.nomination} №{self.criteria_type}"
 
     class Meta:
         db_table = "criteria"
@@ -66,7 +66,9 @@ class Employees(models.Model):
     date_of_birth = models.DateField(blank=True, null=True)
 
     def __str__(self) -> str:
-        return f"{self.first_name} {self.last_name} {self.position}"
+        if self.patronymic:
+            return f"{self.last_name} {self.first_name[0]}. {self.patronymic[0]}. {self.position}"
+        return f"{self.last_name} {self.first_name} {self.position}"
 
     class Meta:
         db_table = "employees"
@@ -85,9 +87,11 @@ class NominationTypes(models.Model):
 class Nominations(models.Model):
     id = models.BigAutoField(primary_key=True)
     type = models.ForeignKey(NominationTypes, models.DO_NOTHING, db_column="type")
-    name = models.CharField(unique=True, max_length=50)
+    name = models.CharField(unique=True, max_length=256)
     is_team_type = models.BooleanField()
-    division = models.ForeignKey(Divisions, models.DO_NOTHING, db_column="division")
+    division = models.ForeignKey(
+        Divisions, models.DO_NOTHING, db_column="division", blank=True, null=True
+    )
     edit_time = models.DateTimeField(blank=True, null=True)
     editor = models.CharField(max_length=50, blank=True, null=True)
     create_time = models.DateTimeField()
@@ -109,6 +113,16 @@ class Organizations(models.Model):
 
     class Meta:
         db_table = "organizations"
+
+
+class RequestStatuses(models.Model):
+    name = models.CharField(primary_key=True, max_length=128)
+
+    def __str__(self) -> str:
+        return self.name
+
+    class Meta:
+        db_table = "request_statuses"
 
 
 class Requests(models.Model):
@@ -137,9 +151,10 @@ class Requests(models.Model):
     editor = models.CharField(max_length=100, blank=True, null=True)
     create_time = models.DateTimeField()
     creator = models.CharField(max_length=100)
+    status = models.ForeignKey(RequestStatuses, models.DO_NOTHING, db_column="status")
 
     def __str__(self) -> str:
-        return self.id
+        return f"{self.id} {self.nomination}-{self.organization}"
 
     class Meta:
         db_table = "requests"
@@ -151,7 +166,7 @@ class RequestsOfEmployees(models.Model):
     request = models.ForeignKey(Requests, models.DO_NOTHING, db_column="request")
 
     def __str__(self) -> str:
-        return f"{self.nomine} {self.request}"
+        return f"{self.employee} {self.request}"
 
     class Meta:
         db_table = "requests_of_employees"
