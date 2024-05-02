@@ -26,4 +26,3 @@ admin.site.register(Organizations)
 admin.site.register(RequestsOfEmployees)
 admin.site.register(CriterionResponse)
 admin.site.register(RequestStatuses)
-# Register your models here.
