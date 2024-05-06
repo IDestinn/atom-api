@@ -65,13 +65,14 @@ class NominationsSerializer(serializers.ModelSerializer):
 
 
 class CriteriaSerializer(serializers.ModelSerializer):
+    nomination_name = serializers.CharField(source="nomination.name")
     nomination_type = serializers.CharField(source="nomination.type")
 
     class Meta:
         model = Criteria
         fields = [
             "name",
-            "nomination",
+            "nomination_name",
             "nomination_type",
             "criteria_type",
             "description",
