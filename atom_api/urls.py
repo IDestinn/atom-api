@@ -9,6 +9,8 @@ router.register(r"requests", views.RequestMainPage)
 router.register(r"employees", views.EmployeesView)
 router.register(r"nominations", views.NominationsView)
 router.register(r"criteria", views.CriteriaView)
+router.register(r"divisions", views.DivisionList)
+router.register(r"organizations", views.OrganizationList)
 
 
 urlpatterns = [

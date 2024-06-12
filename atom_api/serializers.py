@@ -1,5 +1,13 @@
 from rest_framework import serializers
-from .models import Criteria, Employees, Nominations, Users, Requests
+from .models import (
+    Criteria,
+    Divisions,
+    Employees,
+    Nominations,
+    Organizations,
+    Users,
+    Requests,
+)
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -33,6 +41,7 @@ class EmployeesSerializer(serializers.ModelSerializer):
     class Meta:
         model = Employees
         fields = [
+            "id",
             "last_name",
             "first_name",
             "patronymic",
@@ -79,3 +88,15 @@ class CriteriaSerializer(serializers.ModelSerializer):
             "editor",
             "creator",
         ]
+
+
+class DivisionsListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Divisions
+        fields = ["name", "management_company"]
+
+
+class OrganizationsListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Organizations
+        fields = ["name", "division"]

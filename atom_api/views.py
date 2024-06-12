@@ -1,9 +1,19 @@
 from rest_framework import viewsets
-from .models import Criteria, Employees, Nominations, Users, Requests
+from .models import (
+    Criteria,
+    Divisions,
+    Employees,
+    Nominations,
+    Organizations,
+    Users,
+    Requests,
+)
 from .serializers import (
     CriteriaSerializer,
+    DivisionsListSerializer,
     EmployeesSerializer,
     NominationsSerializer,
+    OrganizationsListSerializer,
     UserSerializer,
     RequestSerializer,
 )
@@ -32,3 +42,13 @@ class NominationsView(viewsets.ModelViewSet):
 class CriteriaView(viewsets.ModelViewSet):
     queryset = Criteria.objects.all()
     serializer_class = CriteriaSerializer
+
+
+class DivisionList(viewsets.ModelViewSet):
+    queryset = Divisions.objects.all()
+    serializer_class = DivisionsListSerializer
+
+
+class OrganizationList(viewsets.ModelViewSet):
+    queryset = Organizations.objects.all()
+    serializer_class = OrganizationsListSerializer
